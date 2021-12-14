@@ -1,0 +1,146 @@
+<div *ngIf="this.apiService.isLoading">
+    <mat-progress-bar style="background-color: white" mode="indeterminate">
+    </mat-progress-bar>
+</div>
+
+<div>
+    <img class="logo" src="../../assets/BMW_logo_white.png" />
+</div>
+
+<input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+<mat-toolbar class="headerToolBar">
+    <h1 style="color:white">AI Pipeline Image App (APIA)</h1>
+</mat-toolbar>
+
+
+<mat-grid-list cols="6" rowHeight="10em">
+    <mat-grid-tile colspan="1" rowspan="6">
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>
+                    <h3> Input Parameters:</h3>
+                </mat-card-title>
+
+                <mat-card-subtitle>
+                    <h4></h4>
+                </mat-card-subtitle>
+
+            </mat-card-header>
+            <mat-card-content>
+
+                <mat-form-field appearance="fill" class="selectModel">
+                    <mat-label>Select a trained neural net</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let model of this.dataService.models" [value]="model"
+                            (click)="selectModel(model)">
+                            {{model}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <br /><br />
+                <h3>Select an image for processing:</h3>
+                <button mat-button class="button" (click)="fileInput.click()">Select an image</button>
+                <br /><br />
+                <div *ngIf="this.dataService.postImagePossible;"> 
+                    <h3>Process your image with the AI pipeline</h3>
+                    <button mat-button class="button" style=" margin-top: 3%;" (click)="postFile()">
+                        Start image prediction
+                    </button>
+                </div>
+
+            </mat-card-content>
+            <div *ngIf="this.dataService.downloadPossible">
+                <h3>CSV file ready to download:</h3>
+                <button (click)="downloadFile()" mat-button class="button">Download Results</button>
+            </div>
+           
+        </mat-card>
+    </mat-grid-tile>
+
+
+    <mat-grid-tile colspan="3" rowspan="6">
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>
+                    <h3> Image</h3>
+                </mat-card-title>
+
+                <mat-card-subtitle>
+                    <h4></h4>
+                </mat-card-subtitle>
+
+            </mat-card-header>
+            <mat-card-content>
+
+                <img class="image" src={{this.dataService.imageDisplayUrl}}>
+
+
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+
+
+    <mat-grid-tile colspan="2" rowspan="6" class="classDistribution">
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>
+                    <h3> Prediction Summary</h3>
+                </mat-card-title>
+
+                <mat-card-subtitle>
+                    <h4></h4>
+                </mat-card-subtitle>
+
+            </mat-card-header>
+            <mat-card-content>
+                <div *ngIf="this.dataService.predictionComplete">
+                    <div class="predictionInfoTable">
+                        <table class="resultTable" mat-table [dataSource]="this.dataService.predictionInfo" matSort>
+                            <ng-container matColumnDef="ClassId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Class Id </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ClassId}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="ClassName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Class Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ClassName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Confidence">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Confidence </th>
+                                <td mat-cell *matCellDef="let element"> {{element.Confidence}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsEngineTable"></tr>
+                            <tr class="example-element-row" mat-row
+                                *matRowDef="let row; columns: displayedColumnsEngineTable;"
+                                (click)="selectedTableRow = selectedTableRow === row ? null : row"
+                                [ngClass]="{ 'selected': row === selectedTableRow }"></tr>
+                        </table>
+                    </div>
+                    <div style="margin-top: 15%;">
+                        <div id="classDistribution" class="classDistribution"></div>
+                    </div>
+
+                    <h3 class="headerBarChart">Distribution of classes:</h3>
+
+                    <mat-form-field appearance="fill" class="selectBarChartMeasure">
+                        <mat-label>Select an aggregation</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let aggregationLevel of aggregationLevels" [value]="aggregationLevel"
+                                (click)="updateBarChart(aggregationLevel)">
+                                {{aggregationLevel}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+
+</mat-grid-list>
+
+<mat-toolbar class="footer">
+    <span class="footer-text">Made with <i class="fa fa-heart"></i> by Joscha</span>
+</mat-toolbar>
