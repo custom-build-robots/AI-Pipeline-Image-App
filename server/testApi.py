@@ -53,8 +53,8 @@ TODO:
 def predict():
     url='http://192.168.2.174:4343/models/' + request.json['selected_model'] + '/predict'
     byte_image_string = str.encode((request.json['input_data']))
-    
     binaryString = base64.decodebytes(byte_image_string)
+    
     ####################################
     ############ Testing ###############
     ####################################
