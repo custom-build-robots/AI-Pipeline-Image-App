@@ -2,7 +2,7 @@
 """
 Created on Wed Sep 29 16:15:04 2021
 
-@author: <user>
+@author: Joscha E. and Ingmar S.
 """
 
 import requests
@@ -51,10 +51,12 @@ TODO:
 @app.route('/predict', methods=['POST'])
 @cross_origin()
 def predict():
+    # Set the URL where the REST-API of the BMW-Training Suite is running 
+    # to request a prediction for your uploaded image and get back the values how good the prediction performed.   
     url='http://192.168.2.174:4343/models/' + request.json['selected_model'] + '/predict'
     byte_image_string = str.encode((request.json['input_data']))
     binaryString = base64.decodebytes(byte_image_string)
-    
+
     ####################################
     ############ Testing ###############
     ####################################
@@ -137,19 +139,19 @@ def predictImage():
     # Convert base64_image_string to byte object
     binaryString = base64.decodebytes(byte_image_string)
  
-
     # import PIL.Image as Image
     # from io import BytesIO
     # im = Image.open(BytesIO(base64.b64decode(im_bytes1)))
     # im.show()
     # model_name = "smurfs_001-frcnn_resnet_50"
+     # Set the URL where the REST-API of the BMW-Training Suite is running 
+    # to request a prediction for your uploaded image to get back the image with bounding boxes.      
     url='http://192.168.2.174:4343/models/' + str(request.json['selected_model']) + '/predict_image'
 
     payload = {'input_data': binaryString}
     response = requests.post(url, files=payload)
     binaryStringFromResponse = response.content    
     base64String= base64.b64encode(binaryStringFromResponse)
-    
     
     # # with open('C:/Users/<user>/Desktop/test.txt', "rb") as image_file:
     #     encoded = base64.b64encode(image_file.read())
@@ -159,8 +161,6 @@ def predictImage():
 
     return base64String
 
-
-
 if __name__ == '__main__':
-      #app.run(debug=True, host='0.0.0.0', port=5010)
+      # Change your hoste IP and port (port only if needed) here:
       app.run(debug=True, host='192.168.2.174', port=5010)

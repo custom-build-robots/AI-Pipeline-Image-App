@@ -6,7 +6,7 @@ import axios from 'axios';
 })
 export class ApiService {
   public isLoading = false
-  // set the URL where the API Server of the AI Pipeline Image App is running
+  // set the API and port where the API Server of the AI Pipeline Image App is running
   public baseUrl: string = "http://192.168.2.174:5010/";
   constructor() { }
 
