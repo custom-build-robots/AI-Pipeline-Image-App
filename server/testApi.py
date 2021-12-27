@@ -41,7 +41,7 @@ def load():
     print()
     print()
     # Set the URL where the REST-API of the BMW-Training Suite is running 
-    # to request the already trained neural nets.
+    # to request a list of the already trained neural nets.
     response = requests.get("http://192.168.2.174:4343/load")
     return response.json()
 
