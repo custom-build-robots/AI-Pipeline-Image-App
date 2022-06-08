@@ -4,6 +4,9 @@ import { PredictionService } from '../services/prediction.service';
 import { BarchartService } from '../services/barchart.service';
 import { DataService } from '../services/data.service';
 import { DownloadService } from '../services/download.service';
+import { MatDialog } from '@angular/material/dialog';
+import { WebcamComponent } from '../webcam/webcam.component';
+import * as d3 from "d3";
 
 @Component({
   selector: 'app-home',
@@ -18,7 +21,8 @@ export class HomeComponent implements OnInit {
     private predictionService: PredictionService,
     private barChartService: BarchartService,
     public dataService: DataService,
-    private downloadService: DownloadService) { }
+    private downloadService: DownloadService,
+    public dialog: MatDialog) { }
 
   displayedColumnsEngineTable: string[] = ['ClassId', 'ClassName', 'Confidence'];
   aggregationLevels: any = ["Sum of class names", "Mean of confindence"]
@@ -55,7 +59,7 @@ export class HomeComponent implements OnInit {
     var headers = ["ClassId",
       "ClassName",
       "Confidence"]
-  //  var csv = this.downloadService.ConvertToCSV(this.dataService.predictionInfo, headers)
+    //  var csv = this.downloadService.ConvertToCSV(this.dataService.predictionInfo, headers)
     this.downloadService.downloadFile(this.dataService.predictionInfo, headers)
   }
 
@@ -69,33 +73,26 @@ export class HomeComponent implements OnInit {
 
   }
 
+  openWebcamDialog() {
+
+    const dialogRef = this.dialog.open(WebcamComponent, {
+      width: '500px',
+      height: '500px',
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+
+
+  }
+
 
 
   async ngOnInit() {
     this.dataService.models = Object.keys(await this.apiService.getModels())
 
-    this.jsonData = [{
-      name: 'Berlin',
-      age: '45',
-      country: 'Spain',
-      phone: '896514326'
-    },
-    {
-      name: 'Professor',
-      age: '42',
-      country: 'spain'
-    },
-    {
-      name: 'Tokyo',
-      age: '35',
-      phone: '854668244'
-    },
-    {
-      name: 'Helsinki',
-      phone: '35863297'
-    }];
 
-    let arrHeader = ["name", "age", "country", "phone"];
     //  let csvData = this.ConvertToCSV(this.jsonData, arrHeader);
     // console.log(csvData)
   }

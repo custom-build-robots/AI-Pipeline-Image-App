@@ -61,7 +61,7 @@ export class PredictionService {
     var inputImage = this.dataService.imageDisplayUrl
 
     var data: any = await this.apiService.predictImage(inputImage, this.dataService.selectedModel)
-
+    
     this.dataService.imageDisplayUrl = ('data:image/png;base64,'
       + data);
     var temp = []

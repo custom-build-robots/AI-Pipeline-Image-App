@@ -1,0 +1,14 @@
+<div *ngIf="stream">
+    <webcam [width]="450" [height]="250" [trigger]=$trigger (imageCapture)="snapshot($event)"></webcam>
+
+
+</div>
+
+
+<div *ngIf="previewImage">
+    <img [src]="previewImage" width="100" height="100">
+</div>
+<mat-dialog-actions align="end">
+    <button *ngIf="stream" mat-button class="button" (click)="takeImage()">Capute Webcam Image</button>
+    <button *ngIf="previewImage" mat-button mat-dialog-close class="button" (click)="saveImage()">Save Image</button>
+</mat-dialog-actions>

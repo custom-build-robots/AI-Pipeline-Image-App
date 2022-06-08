@@ -28,6 +28,8 @@ app.debug = True
 cors = CORS(app)
 
 
+baseUrl = 'http://10.249.234.188:4343/'
+
 """ 
 TODO:
 """
@@ -42,7 +44,8 @@ def load():
     print()
     # Set the URL where the REST-API of the BMW-Training Suite is running 
     # to request a list of the already trained neural nets.
-    response = requests.get("http://192.168.2.174:4343/load")
+    response = requests.get(baseUrl + "load")
+ #   return "success"
     return response.json()
 
 """ 
@@ -53,7 +56,7 @@ TODO:
 def predict():
     # Set the URL where the REST-API of the BMW-Training Suite is running 
     # to request a prediction for your uploaded image and get back the values how good the prediction performed.   
-    url='http://192.168.2.174:4343/models/' + request.json['selected_model'] + '/predict'
+    url=baseUrl + 'models/' + request.json['selected_model'] + '/predict'
     byte_image_string = str.encode((request.json['input_data']))
     binaryString = base64.decodebytes(byte_image_string)
 
@@ -146,7 +149,8 @@ def predictImage():
     # model_name = "smurfs_001-frcnn_resnet_50"
      # Set the URL where the REST-API of the BMW-Training Suite is running 
     # to request a prediction for your uploaded image to get back the image with bounding boxes.      
-    url='http://192.168.2.174:4343/models/' + str(request.json['selected_model']) + '/predict_image'
+    # old Adress = http://192.168.2.174:4343/
+    url= baseUrl + 'models/' + str(request.json['selected_model']) + '/predict_image'
 
     payload = {'input_data': binaryString}
     response = requests.post(url, files=payload)
@@ -163,4 +167,5 @@ def predictImage():
 
 if __name__ == '__main__':
       # Change your hoste IP and port (port only if needed) here:
-      app.run(debug=True, host='192.168.2.174', port=5010)
+      # app.run(debug=True, host='192.168.2.174', port=5010)
+      app.run(debug=True, port=5010)

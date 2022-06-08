@@ -4,7 +4,7 @@
 </div>
 
 <div>
-    <img class="logo" src="../../assets/logo.png" />
+ <!--   <img class="logo" src="../../assets/logo.png" />-->
 </div>
 
 <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
@@ -14,7 +14,7 @@
 
 <mat-grid-list cols="6" rowHeight="10em">
     <mat-grid-tile colspan="1" rowspan="6">
-        <mat-card class="card">
+        <mat-card class="card" id="leftCard">
             <mat-card-header>
                 <mat-card-title>
                     <h3> Input Parameters:</h3>
@@ -39,9 +39,16 @@
 
                 <br /><br />
                 <h3>Select an image for processing:</h3>
-                <button mat-button class="button" (click)="fileInput.click()">Select an image</button>
+                <button mat-button class="button" (click)="fileInput.click()">Select an Image</button>
+
                 <br /><br />
-                <div *ngIf="this.dataService.postImagePossible;"> 
+                <div>
+                    <button mat-button class="button" (click)="openWebcamDialog()">
+                        Capture Webcam Image</button>
+                    
+                </div>
+
+                <div *ngIf="this.dataService.postImagePossible;">
                     <h3>Process your image with the AI pipeline</h3>
                     <button mat-button class="button" style=" margin-top: 3%;" (click)="postFile()">
                         Start image prediction
@@ -53,7 +60,7 @@
                 <h3>CSV file ready to download:</h3>
                 <button (click)="downloadFile()" mat-button class="button">Download Results</button>
             </div>
-           
+
         </mat-card>
     </mat-grid-tile>
 

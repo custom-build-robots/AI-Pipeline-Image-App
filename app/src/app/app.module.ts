@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { WebcamModule } from 'ngx-webcam';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component'
+import { WebcamComponent } from './webcam/webcam.component';
 
 
 import { FormsModule } from '@angular/forms';
@@ -18,12 +21,15 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog'
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    WebcamComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +44,8 @@ import { MatCardModule } from '@angular/material/card';
     MatGridListModule,
     MatCardModule,
     MatTableModule,
+    WebcamModule,
+    MatDialogModule,
     RouterModule.forRoot([
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },

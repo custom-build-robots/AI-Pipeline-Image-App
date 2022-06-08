@@ -7,8 +7,10 @@ import axios from 'axios';
 export class ApiService {
   public isLoading = false
   // set the API and port where the API Server of the AI Pipeline Image App is running
-  public baseUrl: string = "http://192.168.2.174:5010/";
-  constructor() { }
+ // public baseUrl: string = "http://192.168.2.174:5010/";
+  public baseUrl: string = "http://127.0.0.1:5010/" 
+ 
+ constructor() { }
 
 
 
@@ -19,7 +21,9 @@ export class ApiService {
     await axios.get(this.baseUrl + "load")
       .then((response) => {
         res = response.data
+        console.log(response)
       })
+      
     this.isLoading = false
     return res
   }
