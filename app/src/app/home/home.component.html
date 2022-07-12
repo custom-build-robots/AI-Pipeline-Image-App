@@ -4,7 +4,7 @@
 </div>
 
 <div>
- <!--   <img class="logo" src="../../assets/logo.png" />-->
+    <!--   <img class="logo" src="../../assets/logo.png" />-->
 </div>
 
 <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
@@ -28,11 +28,11 @@
             <mat-card-content>
 
                 <mat-form-field appearance="fill" class="selectModel">
-                    <mat-label>Select a trained neural net</mat-label>
+                    <mat-label>Select a neural net</mat-label>
                     <mat-select>
                         <mat-option *ngFor="let model of this.dataService.models" [value]="model"
-                            (click)="selectModel(model)">
-                            {{model}}
+                            (click)="selectModel(model.id)">
+                            {{model.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -45,7 +45,7 @@
                 <div>
                     <button mat-button class="button" (click)="openWebcamDialog()">
                         Capture Webcam Image</button>
-                    
+
                 </div>
 
                 <div *ngIf="this.dataService.postImagePossible;">

@@ -87,14 +87,23 @@ export class HomeComponent implements OnInit {
 
   }
 
+  addNameToModel(modeldata: any) {
+    var newModel: any = []
+    for (var i in modeldata) {
+      var tempArr = (modeldata[i].split("_"))
 
+      newModel.push({
+        id: modeldata[i],
+        name: tempArr[2]
 
+      })
+
+    }
+    return newModel
+  }
   async ngOnInit() {
-    this.dataService.models = Object.keys(await this.apiService.getModels())
-
-
-    //  let csvData = this.ConvertToCSV(this.jsonData, arrHeader);
-    // console.log(csvData)
+    var modelData = Object.keys(await this.apiService.getModels())
+    this.dataService.models = this.addNameToModel(modelData)
   }
 
 }

@@ -28,7 +28,7 @@ app.debug = True
 cors = CORS(app)
 
 
-baseUrl = 'http://10.249.234.188:4343/'
+baseUrl = 'http://10.249.234.186:4343/'
 
 """ 
 TODO:
